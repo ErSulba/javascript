@@ -1,7 +1,7 @@
 var estudiantes = ["Dani", "Ale", "Cristian", "Mina", "James"]
 
 for (var i = 0; i < estudiantes.length; i++) {
-  // console.log(estudiantes[i])
+  s
   console.log("El indice es " + i);
 }
 
