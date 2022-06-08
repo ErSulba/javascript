@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accesando al DOM</title>
+  </head>
+  <body>
+    <div class="caja">soy la caja 1</div>
+    <div class="caja">soy la caja 2</div>
+    <div class="caja">soy la caja 3</div>
+    <script>
+      const caja = document.querySelector('.caja')
+      const cajas = document.querySelectorAll('.caja')
+      // Creando elementos
+      const nuevoItem = document.createElement('div')
+      nuevoItem.classList.add('caja')
+      nuevoItem.textContent = 'soy una caja creada con javascript'
+      // anexando el elemento al body
+      document.body.appendChild(nuevoItem)
+      // removiendo el elemento
+      setTimeout(() => {
+        nuevoItem.remove()
+        console.log('se ejecuto en 3 segundos y elimino el item creado')
+      }, 3000)
+      // otro metodo de insertar elementos
+      const otroElemento = document.createElement('div')
+      otroElemento.classList.add('caja', 'artificial')
+      otroElemento.textContent = 'soy otro elemento creado con javascript'
+
+      caja.insertAdjacentElement('afterend', otroElemento)
+      // modificar contenido de un elemento
+      console.log(caja.textContent)
+      caja.textContent = 'Cambie mi texto via javascript'
+      // en este caso javascript escapa el HTML escrito para evitar inyeccion de codigo malicioso
+      // caja.textContent = '<h1> hola soy un jaker </h1>'
+      cajas[1].innerHTML = '<h1> hola soy un jaker </h1>'
+      cajas[1].outerHTML = '<h1> hola soy un jaker </h1>'
+    </script>
+  </body>
+</html>
