@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do list</title>
+    <style>
+      :root {
+        --indian-yellow: #e09f3e;
+        --deep-space-sparkle: #335c67;
+        --rosewood: #540b0e;
+      }
+      body {
+        background-color: var(--indian-yellow);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>To do list</h1>
+    <input type="text" name="userInput" id="userInput" />
+    <ul id="todo-list">
+      <li>first task</li>
+      <!-- add todos here -->
+    </ul>
+    <script>
+      const userInput = document.getElementsByName('userInput')[0]
+
+      userInput.addEventListener('keypress', function (event) {
+        console.log('function has start')
+        if (event.key !== 'Enter') {
+          // si la tecla es distinta de enter, la function se para aqui
+          return
+        }
+
+        const value = event.target.value
+        const todo = document.createElement('li')
+        todo.textContent = value
+
+        const todoList = document.getElementById('todo-list')
+        todoList.appendChild(todo)
+      })
+    </script>
+  </body>
+</html>
