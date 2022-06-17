@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Handling</title>
+  </head>
+  <body>
+    <h1>Handling forms with javascript</h1>
+    <form
+      method="get"
+      name="greetingsForm"
+      onsubmit="return greetUser(document.greetingsForm.userName.value);"
+    >
+      <input type="text" name="userName" />
+      <input type="submit" value="send" />
+    </form>
+    <h2>Form 2</h2>
+    <form
+      method="get"
+      name="form2"
+      onsubmit="return greetUser(document.form2.userName2.value)"
+    >
+      <input type="text" name="userName2" />
+      <input type="submit" value="submit" />
+    </form>
+    <script>
+      function greetUser(name) {
+        console.log(`greetings ${name}`)
+        return false // in order to prevent the default behaviour of the submit event you have to return false in the function
+      }
+    </script>
+  </body>
+</html>

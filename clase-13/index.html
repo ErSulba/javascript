@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>prueba</title>
+  </head>
+  <body>
+    <h1>mi formulario pedorro</h1>
+    <form onsubmit="return miSubmit();">
+      <input type="text" name="nombre" id="nombre" />
+      <input type="submit" value="enviar" />
+    </form>
+    <script>
+      console.log('se cargo el javascript')
+      function miSubmit() {
+        console.log('se remplazo el submit')
+        const nombre = document.getElementById('nombre')
+        alert('Bienvenido ' + nombre.value)
+        console.log(`${nombre.value} is gei`)
+        return false
+      }
+    </script>
+  </body>
+</html>
