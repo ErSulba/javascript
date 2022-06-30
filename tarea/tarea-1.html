@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do</title>
+    <style>
+        :root {
+          --indian-yellow: #e09f3e;
+          --deep-space-sparkle: #335c67;
+          --rosewood: #540b0e;
+        }
+        body {
+          background-color: var(--deep-space-sparkle);
+        }
+        span {
+        display: inline-block;
+        background-color: var(--indian-yellow);
+        text-align: center;
+        cursor: pointer;
+        }  
+      </style>
+</head>
+
+<body>
+    <section>
+        <h1>To do Adder </h1>
+        <input type="text" id="task">
+        <button id="add">Add Task</button>
+
+        <h3>To Do - List</h3>
+        <ul id="list">
+
+        </ul>
+    </section>
+
+    <script>
+var inputTask = document.getElementById("task");
+var btn = document.getElementById("add");
+var list = document.getElementById("list");
+
+btn.onclick = function() {
+    if (inputTask.value == "") {
+        return;
+    }
+    var element = inputTask.value;
+    var li = document.createElement("li");
+    li.textContent = element;
+    list.appendChild(li);
+
+    var btnDelete = document.createElement("span");
+    btnDelete.textContent = " Delete Task";
+    li.appendChild(btnDelete);
+
+    btnDelete.onclick = function() {
+        li.remove();
+    }
+    inputTask.value = "";
+}
+    </script>
+</body>
+
+</html>

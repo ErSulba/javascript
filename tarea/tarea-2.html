@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do</title>
+    <style>
+      :root {
+        --indian-yellow: #e09f3e;
+        --deep-space-sparkle: #335c67;
+        --rosewood: #540b0e;
+      }
+      body {
+        background-color: var(--deep-space-sparkle);
+      }
+      span {
+        display: inline-block;
+        background-color: var(--indian-yellow);
+        text-align: center;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section>
+      <h1>To do Adder</h1>
+      <form action="" name="taskForm" id="taskForm">
+        <input type="text" id="task" />
+        <button type="submit" id="add">Add Task</button>
+      </form>
+
+      <h3>To Do - List</h3>
+      <ul id="list"></ul>
+    </section>
+
+    <script>
+      var inputTask = document.getElementById('task')
+      var btn = document.getElementById('add')
+      var list = document.getElementById('list')
+      let form = document.getElementById('taskForm')
+
+      function addTaskToList(task) {
+        if (task.trim().length === 0) {
+          return
+        }
+        var li = document.createElement('li')
+        li.textContent = task
+        list.appendChild(li)
+
+        var btnDelete = document.createElement('span')
+        btnDelete.textContent = ' Delete Task'
+        li.appendChild(btnDelete)
+
+        btnDelete.onclick = function () {
+          li.remove()
+        }
+        inputTask.value = ''
+      }
+      // TAREA: evitar que el submit recarge la pagina
+      form.addEventListener('submit', function (ev) {
+        const { value } = inputTask
+        addTaskToList(value)
+        return false
+      })
+    </script>
+  </body>
+</html>
