@@ -60,6 +60,7 @@
       }
       // TAREA: evitar que el submit recarge la pagina
       form.addEventListener('submit', function (ev) {
+        ev.preventDefault() // Previene que el submit recarge
         const { value } = inputTask
         addTaskToList(value)
         return false
