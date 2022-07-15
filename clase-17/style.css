@@ -1,0 +1,153 @@
+:root{
+  --NormalType: #A8A77A;
+  --FireType: #EE8130;
+  --WaterType: #6390F0;
+  --ElectricType: #F7D02C;
+  --GrassType: #7AC74C;
+  --IceType: #96D9D6;
+  --FightingType: #C22E28;
+  --PoisonType: #A33EA1;
+  --GroundType: #E2BF65;
+  --FlyingType: #A98FF3;
+  --PsychicType: #F95587;
+  --BugType: #A6B91A;
+  --RockType: #B6A136;
+  --GhostType: #735797;
+  --DragonType: #6F35FC;
+  --DarkType: #705746;
+  --SteelType: #B7B7CE;
+  --FairyType: #D685AD;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: grey;
+  font: 16px Verdana;
+  display: flex;
+  justify-content: center;
+}
+.pagina {
+  margin: 0;
+  box-shadow: 5px 5px 30px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.barra-principal {
+  background-color: #bb2a12;
+  padding: 30px 40px;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.contenido {
+  background: white;
+  margin-top: 0;
+  height: 400px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin: 0;
+}
+
+.contenedor-principal {
+  display: grid;
+  grid-template-columns: 200px 60px 200px 100px 100px;
+
+  gap: 20px;
+}
+.grid-1 {
+  padding: 30px;
+}
+.categoria {
+  display: block;
+  margin-top: 42px;
+  font-size: 0.87em;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.pokemon {
+  width: 150px;
+  border: 2px black solid;
+  border-radius: 5%;
+  box-shadow: 5px 5px 10px;
+}
+.grid-3 {
+  margin-top: 32px;
+}
+.botones-putos {
+  display: flex;
+  justify-content: center;
+  flex-grow: 0;
+}
+
+.tipo-1 {
+  background: greenyellow;
+  width: 70px;
+  border-top-left-radius: 10%;
+  border-bottom-left-radius: 10%;
+  margin: 0;
+  width: 70px;
+  height: 20px;
+  text-align: center;
+  color: white;
+  padding: 3px;
+}
+.tipo-2 {
+  background: rgb(177, 2, 177);
+  width: 70px;
+  height: 20px;
+  border-top-right-radius: 10%;
+  border-bottom-right-radius: 10%;
+  margin: 0;
+  text-align: center;
+  color: white;
+  padding: 3px;
+}
+.habilidades {
+  text-align: center;
+  margin-top: 30px;
+}
+a {
+  display: block;
+  text-decoration: none;
+}
+
+.tier {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.grid-4 {
+  text-align: right;
+}
+.grid-5 {
+  font-weight: 700;
+}
+
+.titulo {
+  margin: 0;
+  padding-top: 10px;
+  padding-left: 30px;
+}
+
+.logo-pagina {
+  height: 38px;
+  margin-top: -4px;
+}
+.busqueda {
+  width: 400px;
+  height: 25px;
+  border-radius: 15px;
+  border: 3px black solid;
+}
+
+.no-display {
+  display: none;
+}
+
+.normal-type {
+  background-color: var(--NormalType);
+}
+
+
