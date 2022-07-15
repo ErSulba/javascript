@@ -9,132 +9,129 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <body>
-      <div class="pagina">
-        <div class="barra-principal">
-          <img
-            class="logo-pagina"
-            src="./bdcd20f5411ee5785889542d303ad4cb.png"
-            alt=""
-          />
-          <form action="" id="searchForm">
-            <input class="busqueda" type="text" name="search" id="search" />
-          </form>
-          <section id="results">
-            <!-- poner el resultado aqui -->
-          </section>
-        </div>
-        <div class="contenido">
-          <h1 class="titulo" id="pokemonName">Bulbasaur</h1>
-          <div class="contenedor-principal">
-            <div class="grid-1">
-              <img
-                class="pokemon"
-                id="pokemonSprite"
-                src="./bulbasaur-pokemon.gif"
-                alt="ME MATA DE CUCHI"
-              />
-            </div>
-            <div class="grid-2">
-              <h3 class="categoria">Type:</h3>
-              <h3 class="categoria">Abilities:</h3>
-            </div>
-            <div class="grid-3">
-              <div class="botones-putos">
-                <div class="tipo-1" id="tipoA">
-                  <span id="tipoA">Grass</span>
-                </div>
-                <div class="tipo-2">
-                  <span class="tipo-2" id="tipoB">Poison</span>
-                </div>
+    <div class="pagina">
+      <div class="barra-principal">
+        <img
+          class="logo-pagina"
+          src="./bdcd20f5411ee5785889542d303ad4cb.png"
+          alt=""
+        />
+        <form action="" id="searchForm">
+          <input class="busqueda" type="text" name="search" id="search" />
+        </form>
+        <section id="results">
+          <!-- poner el resultado aqui -->
+        </section>
+      </div>
+      <div class="contenido">
+        <h1 class="titulo" id="pokemonName">Bulbasaur</h1>
+        <div class="contenedor-principal">
+          <div class="grid-1">
+            <img
+              class="pokemon"
+              id="pokemonSprite"
+              src="./bulbasaur-pokemon.gif"
+              alt="ME MATA DE CUCHI"
+            />
+          </div>
+          <div class="grid-2">
+            <h3 class="categoria">Type:</h3>
+            <h3 class="categoria">Abilities:</h3>
+          </div>
+          <div class="grid-3">
+            <div class="botones-putos">
+              <div class="tipo-1" id="tipoA">
+                <span id="tipoA">Grass</span>
               </div>
-              <div class="habilidades">
-                <a id="habilidad-1" href="">Chlorophyll</a>
-                <a id="habilidad-2" href="">Oveegrow </a>
+              <div class="tipo-2">
+                <span class="tipo-2" id="tipoB">Poison</span>
               </div>
             </div>
+            <div class="habilidades">
+              <a id="habilidad-1" href="">Chlorophyll</a>
+              <a id="habilidad-2" href="">Oveegrow </a>
+            </div>
+          </div>
 
-            <div class="grid-4">
-              <p>HP:</p>
-              <p>Attack:</p>
-              <p>Defense:</p>
-              <p>Sp Atk:</p>
-              <p>Sp. Def:</p>
-              <p>Speed:</p>
-            </div>
-            <div class="grid-5 pokemon-stats">
-              <!-- esta parte la vamos a hacer virtualmente con javascript -->
-            </div>
+          <div class="grid-4">
+            <p>HP:</p>
+            <p>Attack:</p>
+            <p>Defense:</p>
+            <p>Sp Atk:</p>
+            <p>Sp. Def:</p>
+            <p>Speed:</p>
+          </div>
+          <div class="grid-5 pokemon-stats">
+            <!-- esta parte la vamos a hacer virtualmente con javascript -->
           </div>
         </div>
       </div>
-      <script>
-        const form = document.getElementById('searchForm')
-        const pokemonNameElement = document.getElementById('pokemonName')
-        const pokemonSprite = document.getElementById('pokemonSprite')
-        // aqui tomamos el contenedor de los estadisticas
-        const pokemonStatsContainer =
-          document.getElementsByClassName('pokemon-stats')[0]
+    </div>
+    <script>
+      const form = document.getElementById('searchForm')
+      const pokemonNameElement = document.getElementById('pokemonName')
+      const pokemonSprite = document.getElementById('pokemonSprite')
+      // aqui tomamos el contenedor de los estadisticas
+      const pokemonStatsContainer =
+        document.getElementsByClassName('pokemon-stats')[0]
 
-        const pokemonHabilidadA = document.getElementById('habilidad-1')
-        const pokemonHabilidadB = document.getElementById('habilidad-2')
-        const pokemonTier = document.getElementById('tier')
-        const pokemonTypeA = document.getElementById('tipoA')
-        const pokemonTypeB = document.getElementById('tipoB')
-        const pokemonTypeBContainer =
-          document.getElementsByClassName('tipo-2')[0]
-        form.addEventListener('submit', (e) => {
-          e.preventDefault()
-          const { value } = e.target.search
-          fetch(`https://pokeapi.co/api/v2/pokemon/${value}`)
-            .then((response) => {
-              // limpiamos el contenedor
-              pokemonStatsContainer.textContent = ''
-              if (response.ok) {
-                return response.json()
-              } else {
-                throw new Error('Pokemon No Encontrado')
-              }
+      const pokemonHabilidadA = document.getElementById('habilidad-1')
+      const pokemonHabilidadB = document.getElementById('habilidad-2')
+      const pokemonTier = document.getElementById('tier')
+      const pokemonTypeA = document.getElementById('tipoA')
+      const pokemonTypeB = document.getElementById('tipoB')
+      const pokemonTypeBContainer = document.getElementsByClassName('tipo-2')[0]
+      form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const { value } = e.target.search
+        fetch(`https://pokeapi.co/api/v2/pokemon/${value}`)
+          .then((response) => {
+            // limpiamos el contenedor
+            pokemonStatsContainer.textContent = ''
+            if (response.ok) {
+              return response.json()
+            } else {
+              throw new Error('Pokemon No Encontrado')
+            }
+          })
+          .then((data) => {
+            console.log(data)
+            const { name, sprites, stats, abilities, types } = data
+            pokemonNameElement.textContent = name
+            pokemonSprite.src = sprites.front_default
+            pokemonHabilidadA.textContent = abilities[0].ability.name
+            pokemonHabilidadB.textContent = abilities[1].ability.name
+
+            // iteramos por el arreglo de stats
+            stats.forEach((element, idx) => {
+              // creamos un elemento virtual
+              const pokemonStat = document.createElement('p')
+              // asignamos el contenido al elemento que creamos
+              pokemonStat.textContent = stats[idx].base_stat
+              // añadimos el elemento virtual al contenedor
+              pokemonStatsContainer.appendChild(pokemonStat)
             })
-            .then((data) => {
-              console.log(data)
-              const { name, sprites, stats, abilities, types } = data
-              pokemonNameElement.textContent = name
-              pokemonSprite.src = sprites.front_default
-              pokemonHabilidadA.textContent = abilities[0].ability.name
-              pokemonHabilidadB.textContent = abilities[1].ability.name
 
-              // iteramos por el arreglo de stats
-              stats.forEach((element, idx) => {
-                // creamos un elemento virtual
-                const pokemonStat = document.createElement('p')
-                // asignamos el contenido al elemento que creamos
-                pokemonStat.textContent = stats[idx].base_stat
-                // añadimos el elemento virtual al contenedor
-                pokemonStatsContainer.appendChild(pokemonStat)
-              })
+            pokemonTypeA.textContent = types[0].type.name
+            // si hay mas de un tipo, cambia el segundo tipo
+            if (types.length > 1) {
+              pokemonTypeB.textContent = types[1].type.name
+            } else {
+              // de lo contrario ocultamos el segundo tipo
+              // pokemonTypeB.classList.toggle('no-display')
+              pokemonTypeBContainer.classList.toggle('no-display')
+            }
 
-              pokemonTypeA.textContent = types[0].type.name
-              // si hay mas de un tipo, cambia el segundo tipo
-              if (types.length > 1) {
-                pokemonTypeB.textContent = types[1].type.name
-              } else {
-                // de lo contrario ocultamos el segundo tipo
-                // pokemonTypeB.classList.toggle('no-display')
-                pokemonTypeBContainer.classList.toggle('no-display')
-              }
-
-              const type = getComputedStyle(
-                document.documentElement
-              ).getPropertyValue(`--NormalType`)
-              console.log(stats)
-              console.log(abilities)
-            })
-            .catch(function (error) {
-              console.warn(error)
-            })
-        })
-      </script>
-    </body>
+            const type = getComputedStyle(
+              document.documentElement
+            ).getPropertyValue(`--NormalType`)
+            console.log(stats)
+            console.log(abilities)
+          })
+          .catch(function (error) {
+            console.warn(error)
+          })
+      })
+    </script>
   </body>
 </html>
