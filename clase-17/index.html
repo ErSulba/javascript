@@ -40,16 +40,14 @@
           </div>
           <div class="grid-3">
             <div class="botones-putos">
-              <div class="tipo-1" id="tipoA">
-                <span id="tipoA">Grass</span>
-              </div>
-              <div class="tipo-2">
-                <span class="tipo-2" id="tipoB">Poison</span>
-              </div>
+              <!-- <div class="tipo-1" id="tipoA">Grass</div>
+              <div class="tipo-2">Poison</div> -->
             </div>
             <div class="habilidades">
+              <!-- Las habilidades seran creadaas mediante javascript -->
+              <!--
               <a id="habilidad-1" href="">Chlorophyll</a>
-              <a id="habilidad-2" href="">Oveegrow </a>
+              <a id="habilidad-2" href="">Oveegrow </a> -->
             </div>
           </div>
 
@@ -74,20 +72,24 @@
       // aqui tomamos el contenedor de los estadisticas
       const pokemonStatsContainer =
         document.getElementsByClassName('pokemon-stats')[0]
-
-      const pokemonHabilidadA = document.getElementById('habilidad-1')
-      const pokemonHabilidadB = document.getElementById('habilidad-2')
       const pokemonTier = document.getElementById('tier')
       const pokemonTypeA = document.getElementById('tipoA')
       const pokemonTypeB = document.getElementById('tipoB')
       const pokemonTypeBContainer = document.getElementsByClassName('tipo-2')[0]
+      const pokemonAbilitiesContainer =
+        document.getElementsByClassName('habilidades')[0]
+      const pokemonTypesContainer =
+        document.getElementsByClassName('botones-putos')[0]
+
       form.addEventListener('submit', (e) => {
         e.preventDefault()
         const { value } = e.target.search
         fetch(`https://pokeapi.co/api/v2/pokemon/${value}`)
           .then((response) => {
-            // limpiamos el contenedor
+            // limpiamos los contenedores
             pokemonStatsContainer.textContent = ''
+            pokemonAbilitiesContainer.textContent = ''
+            pokemonTypesContainer.textContent = ''
             if (response.ok) {
               return response.json()
             } else {
@@ -99,8 +101,22 @@
             const { name, sprites, stats, abilities, types } = data
             pokemonNameElement.textContent = name
             pokemonSprite.src = sprites.front_default
-            pokemonHabilidadA.textContent = abilities[0].ability.name
-            pokemonHabilidadB.textContent = abilities[1].ability.name
+
+            // iterar por los tipos que tiene el pokemon
+            types.forEach((element, idx) => {
+              const pokemonType = document.createElement('div')
+              pokemonType.textContent = types[idx].type.name
+              // seteamos las clases y los colores
+              pokemonType.className = `tipo-${idx + 1}`
+              pokemonTypesContainer.appendChild(pokemonType)
+            })
+
+            //iterando las habilidades
+            abilities.forEach((element, idx) => {
+              const pokemonAbility = document.createElement('a')
+              pokemonAbility.textContent = abilities[idx].ability.name
+              pokemonAbilitiesContainer.appendChild(pokemonAbility)
+            })
 
             // iteramos por el arreglo de stats
             stats.forEach((element, idx) => {
@@ -111,22 +127,6 @@
               // añadimos el elemento virtual al contenedor
               pokemonStatsContainer.appendChild(pokemonStat)
             })
-
-            pokemonTypeA.textContent = types[0].type.name
-            // si hay mas de un tipo, cambia el segundo tipo
-            if (types.length > 1) {
-              pokemonTypeB.textContent = types[1].type.name
-            } else {
-              // de lo contrario ocultamos el segundo tipo
-              // pokemonTypeB.classList.toggle('no-display')
-              pokemonTypeBContainer.classList.toggle('no-display')
-            }
-
-            const type = getComputedStyle(
-              document.documentElement
-            ).getPropertyValue(`--NormalType`)
-            console.log(stats)
-            console.log(abilities)
           })
           .catch(function (error) {
             console.warn(error)
