@@ -100,6 +100,14 @@
         Steel: '#B7B7CE',
         Fairy: '#D685AD',
       }
+
+      function capitalize(string) {
+        const firstLetter = string.substring(0, 1)
+        const rest = string.substring(1)
+
+        return firstLetter.toUpperCase() + rest
+      }
+
       form.addEventListener('submit', (e) => {
         e.preventDefault()
         const { value } = e.target.search
@@ -124,9 +132,8 @@
             // iterar por los tipos que tiene el pokemon
             types.forEach((element, idx) => {
               const pokemonType = document.createElement('div')
-              const typeString = element.type.name
+              const typeString = capitalize(element.type.name)
               pokemonType.textContent = typeString
-              //TODO: HACER QUE EL STRING LA PRIMERA LETRA SEA MAYUSCULA
               pokemonType.style = `background-color: ${POKEMON_TYPES_COLOR_PALLETE[typeString]};`
               // seteamos las clases y los colores
               pokemonType.className = `tipo-${idx + 1}`
@@ -136,6 +143,7 @@
             //iterando las habilidades
             abilities.forEach((element, idx) => {
               const pokemonAbility = document.createElement('a')
+              //TODO: acomodar como se setean las habilidades, usar "element" en vez de abilities y pone la primera letra en mayuscula
               pokemonAbility.textContent = abilities[idx].ability.name
               pokemonAbilitiesContainer.appendChild(pokemonAbility)
             })
