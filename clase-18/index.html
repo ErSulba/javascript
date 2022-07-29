@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="pagina">
+      <div class="barra-principal">
+        <img
+          class="logo-pagina"
+          src="./bdcd20f5411ee5785889542d303ad4cb.png"
+          alt=""
+        />
+        <form action="" id="searchForm">
+          <input class="busqueda" type="text" name="search" id="search" />
+        </form>
+        <section id="results">
+          <!-- poner el resultado aqui -->
+        </section>
+      </div>
+      <!-- spinner -->
+      <div class="sk-folding-cube no-display">
+        <div class="sk-cube1 sk-cube"></div>
+        <div class="sk-cube2 sk-cube"></div>
+        <div class="sk-cube4 sk-cube"></div>
+        <div class="sk-cube3 sk-cube"></div>
+      </div>
+      <!-- end of spinner -->
+      <div class="contenido no-display">
+        <h1 class="titulo" id="pokemonName">Bulbasaur</h1>
+        <div class="contenedor-principal">
+          <div class="grid-1">
+            <img
+              class="pokemon"
+              id="pokemonSprite"
+              src="./bulbasaur-pokemon.gif"
+              alt="ME MATA DE CUCHI"
+            />
+          </div>
+          <div class="grid-2">
+            <h3 class="categoria">Type:</h3>
+            <h3 class="categoria">Abilities:</h3>
+          </div>
+          <div class="grid-3">
+            <div class="botones-putos">
+              <!-- <div class="tipo-1" id="tipoA">Grass</div>
+              <div class="tipo-2">Poison</div> -->
+            </div>
+            <div class="habilidades">
+              <!-- Las habilidades seran creadaas mediante javascript -->
+              <!--
+              <a id="habilidad-1" href="">Chlorophyll</a>
+              <a id="habilidad-2" href="">Oveegrow </a> -->
+            </div>
+          </div>
+
+          <div class="grid-4">
+            <p>HP:</p>
+            <p>Attack:</p>
+            <p>Defense:</p>
+            <p>Sp Atk:</p>
+            <p>Sp. Def:</p>
+            <p>Speed:</p>
+          </div>
+          <div class="grid-5 pokemon-stats">
+            <!-- esta parte la vamos a hacer virtualmente con javascript -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const form = document.getElementById('searchForm')
+      const pokemonNameElement = document.getElementById('pokemonName')
+      const pokemonSprite = document.getElementById('pokemonSprite')
+      // aqui tomamos el contenedor de los estadisticas
+      const pokemonStatsContainer =
+        document.getElementsByClassName('pokemon-stats')[0]
+      const pokemonTier = document.getElementById('tier')
+      const pokemonTypeA = document.getElementById('tipoA')
+      const pokemonTypeB = document.getElementById('tipoB')
+      const pokemonTypeBContainer = document.getElementsByClassName('tipo-2')[0]
+      const pokemonAbilitiesContainer =
+        document.getElementsByClassName('habilidades')[0]
+      const pokemonTypesContainer =
+        document.getElementsByClassName('botones-putos')[0]
+
+      const spinner = document.getElementsByClassName('sk-folding-cube')[0]
+      const contenido = document.getElementsByClassName('contenido')[0]
+      const POKEMON_TYPES_COLOR_PALLETE = {
+        Normal: '#A8A77A',
+        Fire: '#EE8130',
+        Water: '#6390F0',
+        Electric: '#F7D02C',
+        Grass: '#7AC74C',
+        Ice: '#96D9D6',
+        Fighting: '#C22E28',
+        Poison: '#A33EA1',
+        Ground: '#E2BF65',
+        Flying: '#A98FF3',
+        Psychic: '#F95587',
+        Bug: '#A6B91A',
+        Rock: '#B6A136',
+        Ghost: '#735797',
+        Dragon: '#6F35FC',
+        Dark: '#705746',
+        Steel: '#B7B7CE',
+        Fairy: '#D685AD',
+      }
+
+      function capitalize(string) {
+        const firstLetter = string.substring(0, 1)
+        const rest = string.substring(1)
+
+        return firstLetter.toUpperCase() + rest
+      }
+
+      function toggleDisplay() {
+        spinner.classList.toggle('no-display')
+        contenido.classList.toggle('no-display')
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const { value } = e.target.search
+        // toggle spinner
+        spinner.classList.toggle('no-display')
+        const isContentHidden = contenido.classList.contains('no-display')
+        // verify that content is not shown
+        if (!isContentHidden) {
+          contenido.classList.toggle('no-display')
+        }
+
+        fetch(`https://pokeapi.co/api/v2/pokemon/${value}`)
+          .then((response) => {
+            // limpiamos los contenedores
+            pokemonStatsContainer.textContent = ''
+            pokemonAbilitiesContainer.textContent = ''
+            pokemonTypesContainer.textContent = ''
+            if (response.ok) {
+              return response.json()
+            } else {
+              throw new Error('Pokemon No Encontrado')
+            }
+          })
+          .then((data) => {
+            console.log(data)
+            const { name, sprites, stats, abilities, types } = data
+            pokemonNameElement.textContent = name
+            pokemonSprite.src = sprites.front_default
+
+            // iterar por los tipos que tiene el pokemon
+            types.forEach((element, idx) => {
+              const pokemonType = document.createElement('div')
+              const typeString = capitalize(element.type.name)
+              pokemonType.textContent = typeString
+              pokemonType.style = `background-color: ${POKEMON_TYPES_COLOR_PALLETE[typeString]};`
+              // seteamos las clases y los colores
+              pokemonType.className = `tipo-${idx + 1}`
+              pokemonTypesContainer.appendChild(pokemonType)
+            })
+
+            //iterando las habilidades
+            abilities.forEach((element, idx) => {
+              const pokemonAbility = document.createElement('a')
+              //TODO: acomodar como se setean las habilidades, usar "element" en vez de abilities y pone la primera letra en mayuscula
+              pokemonAbility.textContent = abilities[idx].ability.name
+              pokemonAbilitiesContainer.appendChild(pokemonAbility)
+            })
+
+            // iteramos por el arreglo de stats
+            stats.forEach((element, idx) => {
+              // creamos un elemento virtual
+              const pokemonStat = document.createElement('p')
+              // asignamos el contenido al elemento que creamos
+              pokemonStat.textContent = stats[idx].base_stat
+              // añadimos el elemento virtual al contenedor
+              pokemonStatsContainer.appendChild(pokemonStat)
+            })
+            setTimeout(() => {
+              toggleDisplay()
+            }, 3000)
+          })
+          .catch(function (error) {
+            console.warn(error)
+          })
+      })
+      // comentario pedorro
+    </script>
+  </body>
+</html>
